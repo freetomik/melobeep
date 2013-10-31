@@ -2,7 +2,6 @@
 #include<stdlib.h>
 #include<string.h>
 #include<math.h>
-#include<windows.h>
 void uvod();
 void vypis(int del, short tecka, short tecka2, short krizek, char ton, int okt, short triol, short odmlka, short text, char slovo[50]);
 void vypis_lig(int del, short tecka, short tecka2, short triol);
@@ -70,9 +69,7 @@ int main()
                       del = 8;       
                       break;
                  case '\n':
-                      continue;
                  case '\t':
-                      continue;
                  case ' ':
                       continue;
                  case EOF:
@@ -144,8 +141,6 @@ int main()
                   f = 220;                                        
                   break;      
              case 'h':
-                  f = 247;                      
-                  break;
              case 'b':
                   f = 247;                      
                   break;
@@ -213,11 +208,8 @@ int main()
                   odmlka = 1;
                   break;
              case ' ':
-                  break;          
              case '\n':
-                  break;
              case '\t':
-                  break;
              case EOF:
                   break;                         
              default:
