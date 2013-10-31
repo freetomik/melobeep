@@ -1,7 +1,8 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
-#include<math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <ao/ao.h>
 void uvod();
 void vypis(int del, short tecka, short tecka2, short krizek, char ton, int okt, short triol, short odmlka, short text, char slovo[50]);
 void vypis_lig(int del, short tecka, short tecka2, short triol);
@@ -9,7 +10,6 @@ int main()
 {
     FILE *fr;
     char nazev[50];
-    system("title MeloBeep");
     uvod();
     fgets(nazev,51,stdin);          //fgets kontroluje preteceni, na rozdil od gets
     
@@ -18,8 +18,7 @@ int main()
     
     fr = fopen(nazev, "r");
     if(fr==NULL) {
-      printf("\n\tSoubor %s se nepodarilo otevrit.", nazev);
-      getchar();
+      printf("\n\tSoubor %s se nepodarilo otevrit.\n", nazev);
       return 1;
     } 
       
@@ -34,8 +33,7 @@ int main()
       printf("Zadane tempo neni v rozmezi 30-240 dob/min,proto bylo zvoleno tempo 120 dob/min.");
     }
     int ctvrtka = 60000/tempo;  //tempo se rovna poctu ctvrtovych not za minutu(60000ms)                                
-    printf("\n\tTempo je %d, delka ctvrtove noty je %dms.", tempo, ctvrtka);
-    getchar();
+    printf("\n\tTempo je %d, delka ctvrtove noty je %dms.\n", tempo, ctvrtka);
     
     int c = 0, t, f, i = 1;                        //c - nacitany znak, t - delka dane noty, f - frekvence tonu, i - pocitadlo not
     short _16_ = 0, _32_ = 0, triol = 0;                  //promenne _16_ a _32_ pro noty 16 a 32, triol pro triolku
@@ -50,8 +48,8 @@ int main()
       switch (c) {
                  case '1':
                       t = ctvrtka*4;
-		              _16_ = 1;
-		              del = 1;
+		                  _16_ = 1;
+		                  del = 1;
                       break;
                  case '2':
                       t = ctvrtka*2;
@@ -71,12 +69,12 @@ int main()
                  case '\n':
                  case '\t':
                  case ' ':
+                 case 13:               //carriage return v Linuxu
                       continue;
                  case EOF:
-                      getchar();
                       return 0;                
                  default:
-                      printf("TChyba v zapisu noty cislo %d.\n", i);
+                      printf("TChyba v zapisu noty cislo %d. Chybny znak je >> %i <<\n", i, c);
                       getchar();
                       break;
           }      
@@ -151,7 +149,6 @@ int main()
              case '\n':
                   continue;
              case EOF:
-                  getchar();
                   return 0;
              default:
                   printf("FChyba v zapisu noty cislo %d.\n", i);
@@ -313,15 +310,15 @@ int main()
           printf("\t");
       }
       
-      if(pauza)
-        Sleep(t);
-        //printf("\tt = %d\n", t);
+      /*if(pauza)
+        //Sleep(t);
+        printf("\tt = %d\n", t);
       else {
         Beep(f,t);
         if(odmlka)
           Sleep(1);
-        //printf("\tf = %d, t = %d\n", f, t);
-      }
+        printf("\tf = %d, t = %d\n", f, t);
+      }*/
       
       tecka = 0, tecka2 = 0, triol = 0;
       krizek = 0, okt = 0;
@@ -329,7 +326,7 @@ int main()
       i++;                              
     }
 //------------------------------------------------------------------------------    
-    getchar();
+    printf("\n");
     return 0; 
 }
 
