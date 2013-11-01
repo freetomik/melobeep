@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 #include <ao/ao.h>
+#include <math.h>
+
 void uvod();
 void vypis(int del, short tecka, short tecka2, short krizek, char ton, int okt, short triol, short odmlka, short text, char slovo[50]);
 void vypis_lig(int del, short tecka, short tecka2, short triol);
@@ -309,15 +310,15 @@ int main()
         if(!text)
           printf("\t");
       }
-      
+
       /*if(pauza)
-        //Sleep(t);
-        printf("\tt = %d\n", t);
+          //bude se prehravat funkci ao_play, ale v bufferu budou same nuly
+        //printf("\tt = %d\n", t);
       else {
-        Beep(f,t);
+        //ao_play(...)
         if(odmlka)
-          Sleep(1);
-        printf("\tf = %d, t = %d\n", f, t);
+          //ao_play, buffer s nulami, kraticka delka bufferu
+        //printf("\tf = %d, t = %d\n", f, t);
       }*/
       
       tecka = 0, tecka2 = 0, triol = 0;
