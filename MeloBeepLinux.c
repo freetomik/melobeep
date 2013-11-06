@@ -5,8 +5,10 @@
 #include <math.h>
 
 void uvod();
-void vypis(int del, short tecka, short tecka2, short krizek, char ton, int okt, short triol, short odmlka, short text, char slovo[50]);
+void vypis(int del, short tecka, short tecka2, short krizek, char ton, int okt,
+            short triol, short odmlka, short text, char slovo[50]);
 void vypis_lig(int del, short tecka, short tecka2, short triol);
+void Play(int f, int t, float (*func)(float volume, int freq), ao_sample_format* format);
 int main()
 {
     FILE *fr;
@@ -70,7 +72,7 @@ int main()
                  case '\n':
                  case '\t':
                  case ' ':
-                 case 13:               //carriage return v Linuxu
+                 case 13:               //carriage return z Windowsu
                       continue;
                  case EOF:
                       return 0;                
@@ -148,6 +150,7 @@ int main()
                   ton = '-';
                   break;
              case '\n':
+             case 13:               //carriage return z Windowsu
                   continue;
              case EOF:
                   return 0;
@@ -208,6 +211,7 @@ int main()
              case ' ':
              case '\n':
              case '\t':
+             case 13:
              case EOF:
                   break;                         
              default:
@@ -366,4 +370,13 @@ void vypis_lig(int del, short tecka, short tecka2, short triol) {
   if(tecka) printf(".");
   if(tecka && tecka2) printf(".");
   if(triol) printf("t");  
+}
+/*funkce Play zapouzdruje prehravani, jeji parametry:
+frekvence, delka, ukazatel na matematickou funkci, struktura formatu zvuku
+Popis: matematicka funkce naplni prehravaci buffer hodnotami - bude urcovat
+       vysku, hlasitost a barvu tonu
+naplneny buffer se preda funkci ao_play, ktera hodnoty posle na zvukovy vystup*/
+void Play(int f, int t, float (*func)(float volume, int freq), ao_sample_format* format)
+{
+
 }
