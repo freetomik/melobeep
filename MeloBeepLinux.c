@@ -4,11 +4,21 @@
 #include <ao/ao.h>
 #include <math.h>
 
+typedef struct tone{  //struktura ton, laicky:
+  int f, t;           //vyska, delka
+  float vol;          //hlasitost, od 0 do 1
+  float (*func)(float volume, int freq);      //barva, tvar signalu
+  char *buffer;       //buffer se vzorky
+  int buf_size;       //velikost toho bufferu
+}Ttone;
+
 void uvod();
 void vypis(int del, short tecka, short tecka2, short krizek, char ton, int okt,
             short triol, short odmlka, short text, char slovo[50]);
 void vypis_lig(int del, short tecka, short tecka2, short triol);
-void Play(int f, int t, float (*func)(float volume, int freq), ao_sample_format* format);
+void Play(Ttone tone, ao_device *device, ao_sample_format *format);
+void ao_end(ao_device *device);
+
 int main()
 {
     FILE *fr;
@@ -45,6 +55,36 @@ int main()
     char ton; 
     char slovo[100];
     int n = 0;
+
+    //inicializace pro zvuk
+    ao_device *device;
+    ao_sample_format format;
+    int default_driver;
+    char *buffer;
+    int buf_size;
+    int sample;
+
+    ao_initialize();
+
+    /* -- Setup for default driver -- */
+    default_driver = ao_default_driver_id();
+
+    memset(&format, 0, sizeof(format));   //struktura se vynuluje
+    format.bits = 16;
+    format.channels = 2;
+    format.rate = 44100;
+    format.byte_format = AO_FMT_LITTLE;
+
+    /* -- Open driver -- */
+    device = ao_open_live(default_driver, &format, NULL /* no options */);
+    if (device == NULL) {
+      fprintf(stderr, "Error opening device.\n");
+      return 1;
+    }
+
+    buf_size = format.bits/8 * format.channels * format.rate;
+    buffer = calloc(buf_size, sizeof(char));
+
 //------------------------------------------------------------------------------
     while(c!=EOF) {
       c = getc(fr);
@@ -196,6 +236,7 @@ int main()
                     if(n>100) {
                       printf("\nU noty cislo %d byl prekrocen max. pocet znaku slova pro jednu notu - max.100 znaku.", i);
                       getchar();
+                      ao_end(device);
                       return 1;          
                     }
                     slovo[n] = c;
@@ -229,6 +270,7 @@ int main()
           if(n>100) {
             printf("\nU noty cislo %d byl prekrocen max. pocet znaku slova pro jednu notu - max.100 znaku.", i);
             getchar();
+            ao_end(device);
             return 1;          
           }
           slovo[n] = c;
@@ -252,6 +294,7 @@ int main()
           if(n>100) {
             printf("\nU noty cislo %d byl prekrocen max. pocet znaku slova pro jednu notu - max.100 znaku.", i);
             getchar();
+            ao_end(device);
             return 1;          
           }
           slovo[n] = c;
@@ -294,6 +337,7 @@ int main()
           if(n>100) {
             printf("\nU noty cislo %d byl prekrocen max. pocet znaku slova pro jednu notu - max.100 znaku.", i);
             getchar();
+            ao_end(device);
             return 1;          
           }
           slovo[n] = c;
@@ -332,6 +376,7 @@ int main()
     }
 //------------------------------------------------------------------------------    
     printf("\n");
+    ao_end(device);
     return 0; 
 }
 
@@ -372,11 +417,17 @@ void vypis_lig(int del, short tecka, short tecka2, short triol) {
   if(triol) printf("t");  
 }
 /*funkce Play zapouzdruje prehravani, jeji parametry:
-frekvence, delka, ukazatel na matematickou funkci, struktura formatu zvuku
+struktura Ttone obsahuje: frekvenci, delku, ukazatel na matematickou funkci
+dale je tam zarizeni pro prehravani a struktura formatu zvuku
 Popis: matematicka funkce naplni prehravaci buffer hodnotami - bude urcovat
        vysku, hlasitost a barvu tonu
 naplneny buffer se preda funkci ao_play, ktera hodnoty posle na zvukovy vystup*/
-void Play(int f, int t, float (*func)(float volume, int freq), ao_sample_format* format)
+void Play(Ttone tone, ao_device *device, ao_sample_format* format)
 {
 
+}
+
+void ao_end(ao_device *device) {
+    ao_close(device);
+    ao_shutdown();
 }
