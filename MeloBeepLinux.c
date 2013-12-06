@@ -4,8 +4,12 @@
 #include <ao/ao.h>
 #include <math.h>
 
+#define M_PI 3.14159265358979
+
+const char *progname = "MeloBeepLinux";
+
 typedef struct tone{  //struktura ton, laicky:
-  int f, t;           //vyska, delka
+  int f, t;           //vyska v hertzich, delka v milisekundach
   float vol;          //hlasitost, od 0 do 1
   float (*func)(float volume, int freq);      //barva, tvar signalu
   char *buffer;       //buffer se vzorky
@@ -13,25 +17,32 @@ typedef struct tone{  //struktura ton, laicky:
 }Ttone;
 
 void uvod();
+void help();
 void vypis(int del, short tecka, short tecka2, short krizek, char ton, int okt,
             short triol, short odmlka, short text, char slovo[50]);
 void vypis_lig(int del, short tecka, short tecka2, short triol);
-void Play(Ttone tone, ao_device *device, ao_sample_format *format);
+void Play(Ttone tone, ao_device *device, ao_sample_format format);
 void ao_end(ao_device *device);
 
-int main()
+int main(int argc, char **argv)
 {
     FILE *fr;
-    char nazev[50];
-    uvod();
+    char *nazev;                    //nazev souboru pro otevreni a prehrani
+    /*uvod();
     fgets(nazev,51,stdin);          //fgets kontroluje preteceni, na rozdil od gets
     
     if(nazev[strlen(nazev)-1]=='\n') nazev[strlen(nazev)-1] = '\0';
-    //pokud se zada mene nez 50 znaku, fgets precte i '\n', proto je to treba zamenit za koncovou znacku '\0'
-    
+    //pokud se zada mene nez 50 znaku, fgets precte i '\n', proto je to treba zamenit za koncovou znacku '\0'*/
+    if(argc == 1) {       //spusteno bez argumentu
+      help();
+      return -1;
+    }
+
+    nazev = (char *)malloc(sizeof(char)*strlen(argv[1]));     //sizeof(char) je vzdy 1, ale pro lepsi citelnost
+    nazev = argv[1];
     fr = fopen(nazev, "r");
     if(fr==NULL) {
-      printf("\n\tSoubor %s se nepodarilo otevrit.\n", nazev);
+      printf("Soubor %s se nepodarilo otevrit.\n", nazev);
       return 1;
     } 
       
@@ -46,9 +57,10 @@ int main()
       printf("Zadane tempo neni v rozmezi 30-240 dob/min,proto bylo zvoleno tempo 120 dob/min.");
     }
     int ctvrtka = 60000/tempo;  //tempo se rovna poctu ctvrtovych not za minutu(60000ms)                                
-    printf("\n\tTempo je %d, delka ctvrtove noty je %dms.\n", tempo, ctvrtka);
+    //printf("Tempo je %d, delka ctvrtove noty je %dms.\n", tempo, ctvrtka);
     
-    int c = 0, t, f, i = 1;                        //c - nacitany znak, t - delka dane noty, f - frekvence tonu, i - pocitadlo not
+    Ttone tone;
+    int c = 0, i = 1;                        //c - nacitany znak, i - pocitadlo not
     short _16_ = 0, _32_ = 0, triol = 0;                  //promenne _16_ a _32_ pro noty 16 a 32, triol pro triolku
     short tecka = 0, tecka2 = 0, krizek = 0, pauza = 0, ctvrt_t, odmlka = 0, ligatura = 0, text = 0;
     int del, okt = 0, t_lig = 0;
@@ -90,23 +102,23 @@ int main()
       c = getc(fr);
       switch (c) {
                  case '1':
-                      t = ctvrtka*4;
+                      tone.t = ctvrtka*4;
 		                  _16_ = 1;
 		                  del = 1;
                       break;
                  case '2':
-                      t = ctvrtka*2;
+                      tone.t = ctvrtka*2;
                       del = 2;          
                       break;
                  case '3':
                       _32_ = 1;
                       break;
                  case '4':
-                      t = ctvrtka;
+                      tone.t = ctvrtka;
                       del = 4;
                       break;
                  case '8':
-                      t = ctvrtka/2;
+                      tone.t = ctvrtka/2;
                       del = 8;       
                       break;
                  case '\n':
@@ -125,16 +137,16 @@ int main()
       
       if(_16_==1) {
         if(c=='6') { 
-          t = ctvrtka/4;
+          tone.t = ctvrtka/4;
           _16_ = 0;
           del = 16;
           c = getc(fr);
-          }  
+        }  
       }  
         
       if(_32_==1) {
         if(c=='2') {
-          t = ctvrtka/8;     
+          tone.t = ctvrtka/8;     
           _32_ = 0;
           del = 32;
           c = getc(fr);
@@ -144,14 +156,14 @@ int main()
       }
       
       if(c=='.') {
-        ctvrt_t = (t/4);
-        t = t * 1.5;
+        ctvrt_t = (tone.t/4);
+        tone.t = tone.t * 1.5;
         tecka = 1;
         c = getc(fr);
       }
       
       if(tecka==1 && c=='.') {
-        t = t + ctvrt_t;
+        tone.t = tone.t + ctvrt_t;
         tecka2 = 1;
         c = getc(fr);        
       }
@@ -164,26 +176,26 @@ int main()
             
         switch (c) {
              case 'c':
-                  f = 131;                    
+                  tone.f = 131;                    
                   break;
              case 'd':
-                  f = 147;                     
+                  tone.f = 147;                     
                   break;        
              case 'e':
-                  f = 165;                      
+                  tone.f = 165;                      
                   break;        
              case 'f':
-                  f = 174;
+                  tone.f = 174;
                   break;      
              case 'g':
-                  f = 196;                     
+                  tone.f = 196;                     
                   break;      
              case 'a':
-                  f = 220;                                        
+                  tone.f = 220;                                        
                   break;      
              case 'h':
              case 'b':
-                  f = 247;                      
+                  tone.f = 247;                      
                   break;
              case '-':
                   pauza = 1;
@@ -203,27 +215,27 @@ int main()
       
         switch (c) {                                  //roznasobovani frekvence do jednotlivych oktav
              case '1':
-                  f = f * 2;
+                  tone.f = tone.f * 2;
                   okt = 1;
                   c = getc(fr);                      
                   break;
              case '2':
-                  f = f * 4;
+                  tone.f = tone.f * 4;
                   okt = 2;
                   c = getc(fr);                     
                   break;
              case '3':
-                  f = f * 8;
+                  tone.f = tone.f * 8;
                   okt = 3;
                   c = getc(fr);                     
                   break;
              case 't':
-                  t = (t*2)/3;
+                  tone.t = (tone.t*2)/3;
                   triol = 1;
                   c = getc(fr);
                   break;
              case '+':
-                  t_lig += t;
+                  t_lig += tone.t;
                   vypis(del,tecka,tecka2,krizek,ton,okt,triol,odmlka,text,slovo);
                   printf("+");
                   tecka = 0, tecka2 = 0, triol = 0;
@@ -282,7 +294,7 @@ int main()
       }
 //----------/Slovo-----------                  
       if(triol==0 && c=='t') {   //triola po oktave
-        t = (t*2)/3;
+        tone.t = (tone.t*2)/3;
         triol = 1;
         c = getc(fr);
       }
@@ -308,13 +320,13 @@ int main()
       if(ligatura) {
         if(!text)
           vypis_lig(del, tecka, tecka2, triol);      
-        t_lig += t;                                                   //celkova delka spojenych not
+        t_lig += tone.t;                                                   //celkova delka spojenych not
       }
           
       if(c=='+') {
         if(!t_lig) {
           vypis(del,tecka,tecka2,krizek,ton,okt,triol,odmlka,text,slovo);        //provede jen poprve  
-          t_lig += t; 
+          t_lig += tone.t; 
         }                                                            
         printf("+");
         tecka = 0, tecka2 = 0, triol = 0;
@@ -323,7 +335,7 @@ int main()
       }
       
       if(ligatura) {
-        t = t_lig;
+        tone.t = t_lig;
         printf("\t");
       }
       if(c=='*')
@@ -351,13 +363,15 @@ int main()
         fseek(fr,-1,SEEK_CUR);  
 //----------/Slovo-----------              
       if(krizek)
-        f = f * pow(2, 1/12.0);
+        tone.f = tone.f * pow(2, 1/12.0);
       
       if(!ligatura) {
         vypis(del,tecka,tecka2,krizek,ton,okt,triol,odmlka,text,slovo);          //obycejny vypis, bez ligatury
         if(!text)
           printf("\t");
       }
+
+      //Play()
 
       /*if(pauza)
           //bude se prehravat funkci ao_play, ale v bufferu budou same nuly
@@ -395,6 +409,11 @@ void uvod() {
     printf("...\b\b\b"); 
 }
 
+void help() {
+    printf("Zadejte soubor pro prehrani jako argument programu.\n");
+    printf("Napr. $./%s mozart.txt\n", progname);
+}
+
 void vypis(int del,short tecka, short tecka2, short krizek, char ton, int okt, short triol, short odmlka, short text, char slovo[50]) {
   if(!text) {  
     printf("%d", del);
@@ -422,9 +441,21 @@ dale je tam zarizeni pro prehravani a struktura formatu zvuku
 Popis: matematicka funkce naplni prehravaci buffer hodnotami - bude urcovat
        vysku, hlasitost a barvu tonu
 naplneny buffer se preda funkci ao_play, ktera hodnoty posle na zvukovy vystup*/
-void Play(Ttone tone, ao_device *device, ao_sample_format* format)
+void Play(Ttone tone, ao_device *device, ao_sample_format format)
 {
+    int i, length, sample;
+    for (i = 0; i < format.rate; i++) {
+      sample = (int)(tone.vol * 32768.0 *
+      sin(2 * M_PI * tone.f * ((float) i/format.rate)));    //jedna sekunda sinusu
 
+      /* Put the same stuff in left and right channel */
+      //intove cislo se dava do charoveho bufferu
+      tone.buffer[4*i] = tone.buffer[4*i+2] = sample & 0xff;
+      tone.buffer[4*i+1] = tone.buffer[4*i+3] = (sample >> 8) & 0xff;
+    }
+    /* -- Play -- */
+    length = tone.buf_size / (1 / tone.t);
+    ao_play(device, tone.buffer, length);
 }
 
 void ao_end(ao_device *device) {
