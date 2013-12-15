@@ -96,6 +96,8 @@ int main(int argc, char **argv)
 
     buf_size = format.bits/8 * format.channels * format.rate;
     buffer = calloc(buf_size, sizeof(char));
+    tone.buf_size = buf_size;
+    tone.buffer = buffer;
 
 //------------------------------------------------------------------------------
     while(c!=EOF) {
@@ -373,15 +375,17 @@ int main(int argc, char **argv)
 
       //Play()
 
-      /*if(pauza)
-          //bude se prehravat funkci ao_play, ale v bufferu budou same nuly
+      if(pauza) {
+        tone.vol = 0;
+        Play(tone, device, format);
+      }
         //printf("\tt = %d\n", t);
       else {
-        //ao_play(...)
-        if(odmlka)
-          //ao_play, buffer s nulami, kraticka delka bufferu
-        //printf("\tf = %d, t = %d\n", f, t);
-      }*/
+        tone.vol = 1;
+        if(odmlka) tone.t = 1;
+        Play(tone, device, format);
+        //printf("\tf = %d, t = %d\n", tone.f, tone.t);
+      }
       
       tecka = 0, tecka2 = 0, triol = 0;
       krizek = 0, okt = 0;
@@ -454,7 +458,7 @@ void Play(Ttone tone, ao_device *device, ao_sample_format format)
       tone.buffer[4*i+1] = tone.buffer[4*i+3] = (sample >> 8) & 0xff;
     }
     /* -- Play -- */
-    length = tone.buf_size / (1 / tone.t);
+    length = tone.buf_size / (1000 / tone.t);
     ao_play(device, tone.buffer, length);
 }
 
