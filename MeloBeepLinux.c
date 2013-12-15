@@ -94,7 +94,7 @@ int main(int argc, char **argv)
       return 1;
     }
 
-    buf_size = format.bits/8 * format.channels * format.rate;
+    buf_size = format.bits/8 * format.channels * format.rate * 4;
     buffer = calloc(buf_size, sizeof(char));
     tone.buf_size = buf_size;
     tone.buffer = buffer;
@@ -384,6 +384,7 @@ int main(int argc, char **argv)
         tone.vol = 1;
         if(odmlka) tone.t = 1;
         Play(tone, device, format);
+        // ao_close(device);
         //printf("\tf = %d, t = %d\n", tone.f, tone.t);
       }
       
@@ -448,9 +449,9 @@ naplneny buffer se preda funkci ao_play, ktera hodnoty posle na zvukovy vystup*/
 void Play(Ttone tone, ao_device *device, ao_sample_format format)
 {
     int i, length, sample;
-    for (i = 0; i < format.rate; i++) {
+    for (i = 0; i < format.rate * 4; i++) {
       sample = (int)(tone.vol * 32768.0 *
-      sin(2 * M_PI * tone.f * ((float) i/format.rate)));    //jedna sekunda sinusu
+      sin(2 * M_PI * tone.f * ((float) i/(format.rate))));    //ctyri sekundy sinusu
 
       /* Put the same stuff in left and right channel */
       //intove cislo se dava do charoveho bufferu
@@ -458,7 +459,8 @@ void Play(Ttone tone, ao_device *device, ao_sample_format format)
       tone.buffer[4*i+1] = tone.buffer[4*i+3] = (sample >> 8) & 0xff;
     }
     /* -- Play -- */
-    length = tone.buf_size / (1000 / tone.t);
+    length = (int)(tone.buf_size / (4000 / tone.t));
+    printf("\n");
     ao_play(device, tone.buffer, length);
 }
 
