@@ -42,7 +42,7 @@ int main(int argc, char **argv)
     nazev = argv[1];
     fr = fopen(nazev, "r");
     if(fr==NULL) {
-      printf("Soubor %s se nepodarilo otevrit.\n", nazev);
+      fprintf(stderr, "Soubor %s se nepodarilo otevrit.\n", nazev);
       return 1;
     } 
       
@@ -54,7 +54,7 @@ int main(int argc, char **argv)
 
     if(tempo<30 || tempo>240) {
       tempo = 120;
-      printf("Zadane tempo neni v rozmezi 30-240 dob/min,proto bylo zvoleno tempo 120 dob/min.");
+      fprintf(stderr, "Zadane tempo neni v rozmezi 30-240 dob/min,proto bylo zvoleno tempo 120 dob/min.\n");
     }
     int ctvrtka = 60000/tempo;  //tempo se rovna poctu ctvrtovych not za minutu(60000ms)                                
     //printf("Tempo je %d, delka ctvrtove noty je %dms.\n", tempo, ctvrtka);
@@ -131,7 +131,7 @@ int main(int argc, char **argv)
                  case EOF:
                       return 0;                
                  default:
-                      printf("TChyba v zapisu noty cislo %d. Chybny znak je >> %i <<\n", i, c);
+                      fprintf(stderr, "TChyba v zapisu noty cislo %d. Chybny znak je >> %i <<\n", i, c);
                       getchar();
                       break;
           }      
@@ -154,7 +154,7 @@ int main(int argc, char **argv)
           c = getc(fr);
         }
         else
-          printf("32Chyba v zapisu noty cislo %d.\n", i);
+          fprintf(stderr, "32Chyba v zapisu noty cislo %d.\n", i);
       }
       
       if(c=='.') {
@@ -209,7 +209,7 @@ int main(int argc, char **argv)
              case EOF:
                   return 0;
              default:
-                  printf("FChyba v zapisu noty cislo %d.\n", i);
+                  fprintf(stderr, "FChyba v zapisu noty cislo %d.\n", i);
                   break;
         }
         ton = c;
@@ -248,7 +248,7 @@ int main(int argc, char **argv)
                   slovo[0] = 0;                    //smazani predchoziho slova
                   while((c = getc(fr))!=']') {
                     if(n>100) {
-                      printf("\nU noty cislo %d byl prekrocen max. pocet znaku slova pro jednu notu - max.100 znaku.", i);
+                      fprintf(stderr, "\nU noty cislo %d byl prekrocen max. pocet znaku slova pro jednu notu - max.100 znaku.", i);
                       getchar();
                       ao_end(device);
                       return 1;          
@@ -270,7 +270,7 @@ int main(int argc, char **argv)
              case EOF:
                   break;                         
              default:
-                  printf("OChyba v zapisu noty cislo %d.\n", i);
+                  fprintf(stderr, "OChyba v zapisu noty cislo %d.\n", i);
                   break;
         }      
       }      
@@ -282,7 +282,7 @@ int main(int argc, char **argv)
         slovo[0] = 0;                    //smazani predchoziho slova
         while((c = getc(fr))!=']') {
           if(n>100) {
-            printf("\nU noty cislo %d byl prekrocen max. pocet znaku slova pro jednu notu - max.100 znaku.", i);
+            fprintf(stderr, "\nU noty cislo %d byl prekrocen max. pocet znaku slova pro jednu notu - max.100 znaku.", i);
             getchar();
             ao_end(device);
             return 1;          
@@ -306,7 +306,7 @@ int main(int argc, char **argv)
         slovo[0] = 0;                    //smazani predchoziho slova
         while((c = getc(fr))!=']') {
           if(n>100) {
-            printf("\nU noty cislo %d byl prekrocen max. pocet znaku slova pro jednu notu - max.100 znaku.", i);
+            fprintf(stderr, "\nU noty cislo %d byl prekrocen max. pocet znaku slova pro jednu notu - max.100 znaku.", i);
             getchar();
             ao_end(device);
             return 1;          
@@ -349,7 +349,7 @@ int main(int argc, char **argv)
         slovo[0] = 0;                    //smazani predchoziho slova
         while((c = getc(fr))!=']') {
           if(n>100) {
-            printf("\nU noty cislo %d byl prekrocen max. pocet znaku slova pro jednu notu - max.100 znaku.", i);
+            fprintf(stderr, "\nU noty cislo %d byl prekrocen max. pocet znaku slova pro jednu notu - max.100 znaku.", i);
             getchar();
             ao_end(device);
             return 1;          
