@@ -27,22 +27,17 @@ void ao_end(ao_device *device);
 int main(int argc, char **argv)
 {
     FILE *fr;
-    char *nazev;                    //nazev souboru pro otevreni a prehrani
-    /*uvod();
-    fgets(nazev,51,stdin);          //fgets kontroluje preteceni, na rozdil od gets
-    
-    if(nazev[strlen(nazev)-1]=='\n') nazev[strlen(nazev)-1] = '\0';
-    //pokud se zada mene nez 50 znaku, fgets precte i '\n', proto je to treba zamenit za koncovou znacku '\0'*/
+
     if(argc == 1) {       //spusteno bez argumentu
       help();
       return -1;
     }
 
-    nazev = (char *)malloc(sizeof(char)*strlen(argv[1]));     //sizeof(char) je vzdy 1, ale pro lepsi citelnost
-    nazev = argv[1];
-    fr = fopen(nazev, "r");
+    uvod();
+
+    fr = fopen(argv[1], "r");
     if(fr==NULL) {
-      fprintf(stderr, "Soubor %s se nepodarilo otevrit.\n", nazev);
+      fprintf(stderr, "Soubor %s se nepodarilo otevrit.\n", argv[1]);
       return 1;
     } 
       
@@ -74,7 +69,7 @@ int main(int argc, char **argv)
     int default_driver;
     char *buffer;
     int buf_size;
-    int sample;
+    // int sample;
 
     ao_initialize();
 
@@ -407,11 +402,7 @@ void uvod() {
     printf("\t\t   | |  | |  __/ | (_) | |_/ /  __/  __/ |_) |\n");
     printf("\t\t   \\_|  |_/\\___|_|\\___/\\____/ \\___|\\___| .__/\n");
     printf("\t\t                                       | |\n");
-    printf("\t\t                                       |_|");
-    printf("\n\nVitejte v programu MeloBeep.\n");
-    printf("Tento program prehrava melodie zapsane v textovych souborech s priponou txt.");
-    printf("\nZadejte nazev souboru (soubor musi byt ve stejne slozce s programem) : \n\t");
-    printf("...\b\b\b"); 
+    printf("\t\t                                       |_|\n");
 }
 
 void help() {
@@ -460,7 +451,7 @@ void Play(Ttone tone, ao_device *device, ao_sample_format format)
     }
     /* -- Play -- */
     length = (int)(tone.buf_size / (4000 / tone.t));
-    printf("\n");
+    printf("");
     ao_play(device, tone.buffer, length);
 }
 
