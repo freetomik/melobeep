@@ -1,14 +1,14 @@
 nokia skladatel, regulární výraz pro notu:
-regexr.com: (1|2|4|8|16|32)([.]?[#]?[a-g][1-3]?|[-])
-formálně:   (1+2+4+8+16+32)([.]?[#]?[a-g][1-3]?+[-])
+regexr.com: (1|2|4|8|16|32)([.]?([#]?[a-g][1-3]?|[-]))
+formálně:   (1+2+4+8+16+32)([.]?([#]?[a-g][1-3]?+[-]))
 
 melobeep, regulární výraz pro notu:
-delka[.][.][#]nota[oktava][t][*]
+delka[.][.][#]ton[oktava][t]
 regexr.com: (1|2|4|8|16|32)([.]{0,2}([#]?[a-h][1-3]?[t]?|[-][t]?))
 formálně:   (1+2+4+8+16+32)([.]{0,2}([#]?[a-h][1-3]?[t]?)+[-][t]?))
 
 melobeep, regulární výraz pro notu i se slovem:
-              delka noty    tecky        nota     triola  triola a pauza
+              delka noty    tecky        ton     triola  triola a pauza
             v             v v v          v   v      v v  v    v
 regexr.com: (1|2|4|8|16|32)([.]{0,2}([#]?[a-h][1-3]?[t]?|[-][t]?))(\[[^\]]*\])?
                                      ^ ^      ^   ^               ^          ^
@@ -24,14 +24,14 @@ rozděleno (podle opory z IFJ, str.22, př.2.4.7):
 <delka>    = 1+2+4+8+16+32;
 <tecka>    = \.;
 <krizek>   = #;
-<nota>     = a+b+c+d+e+f+g+h;
+<ton>      = a+b+c+d+e+f+g+h;
 <oktava>   = 1+2+3;
 <triola>   = t;
 <ligatura> = (\+<delka><tecka>{0,2}<triola>?);
 <pauza>    = -;
 <slovo>    = \[[^\[\]]*\];
 
-<melobeep_note> = <delka>(<tecka>{0,2}((<krizek>?<nota><oktava>?<triola>?<ligatura>*)+<pauza><triola>?))<slovo>?
+<melobeep_note> = <delka>(<tecka>{0,2}(<krizek>?<ton><oktava>?<triola>?<ligatura>* + <pauza><triola>?))<slovo>?
 
 pozn. V části "formálně" a "rozděleno" je znak '+' je ve významu disjunkce, nikoli kvantifikátoru.
 
