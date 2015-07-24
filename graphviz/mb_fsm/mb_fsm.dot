@@ -1,0 +1,38 @@
+digraph finite_state_machine {
+    rankdir=LR;
+    size="8,5";
+
+    node [shape = point ] init;
+
+    node [shape = circle, label="Start", fontsize=14] Start;
+    node [shape = circle, label="pitch", fontsize=12] pitch;
+    node [shape = circle, label="dot", fontsize=12] dot;
+    node [shape = circle, label="dot2", fontsize=12] dot2;
+    node [shape = circle, label="sharp", fontsize=12] sharp;
+    node [shape = circle, label="tone", fontsize=12] tone;
+    node [shape = circle, label="rest", fontsize=12] rest;
+    node [shape = circle, label="octave", fontsize=12] octave;
+    node [shape = circle, label="triplet", fontsize=12] triplet;
+
+    init -> Start;
+
+    Start -> Start [ label = "\\w" ];
+    Start -> pitch [ label = "1,2,4,8,16,32" ];
+
+    pitch -> dot [ label = "'.'" ];
+    pitch -> sharp [ label = "'#'" ];
+    pitch -> tone [ label = "[a-h]" ];
+    pitch -> rest [ label = "'-'" ];
+
+    dot -> dot2 [ label = "'.'" ];
+    dot -> sharp [ label = "'#'" ];
+    dot -> tone [ label = "[a-h]" ];
+    dot -> rest [ label = "'-'" ];
+
+    dot2 -> sharp [ label = "'#'" ];
+    dot2 -> tone [ label = "[a-h]" ];
+    dot2 -> rest [ label = "'-'" ];
+
+    tone -> octave [ label = "[1-3]" ];
+    tone -> triplet [ label = "'t'" ];
+}
