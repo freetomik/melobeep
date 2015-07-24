@@ -1,0 +1,53 @@
+Program MeloBeep prevadi zakodovany zapis not zapsany v poznamkovem bloku (souboru s priponou txt) na zvukove melodie.
+Pokud nemate znalost not, je dobre si osvojit zaklady notove teorie, je to nezbytne pro zapis not.
+Postup pouzivani programu:
+1.Vytvorte textovy soubor v poznamkovem bloku ve stejne slozce, kde je program.
+2.Otevrete vytvoreny textovy soubor. Na jeho zacatku napiste cislo od 30 do 240 oznacujici tempo skladby.
+  Tempo je pocet ctvrtovych not za minutu, tzn. kdyz je tempo 120, delka ctvrtove noty bude 0,5 sekundy.
+  Pod tempem muzete pomoci not zacit zapisovat vasi vybranou skladbu, kterou opisujete podle notoveho
+  zapisu treba z nejakeho zpevniku. Noty se zapisuji pomoci cislic, pismen a znaku zpusobem uvedenym nize.
+3.Kdyz mate melodii zapsanou, ulozte a zavrete soubor a spustte program. Napiste nazev vaseho souboru
+  (melodie, kterou chcete prehrat) a na konec pripiste ".txt" bez uvozovek, napr.: mozart.txt.
+  
+
+Princip zapisu not:
+
+delka[.][.][#]nota[oktava][t][*]  - hranate zavorky se nepisou, oznacuji nepovinny udaj
+
+priklady : 2g, 4.c1, 1#a3, 16.#f2, 8..et, 32..#d2t*
+
+- misto delky se zapisuje jedno z cisel: 1, 2, 4, 8, 16, 32
+- jedna tecka prodlouzi notu o polovinu jejiho trvani, dve tecky o polovinu a ctvrtinu
+- krizek zvysi vysku noty o pulton nahoru
+- misto noty se zapisuje jedno z pismen tonu: c, d, e, f, g, a, h (muze byt i b ->  napr. 2#h = 2#b)
+- cisly 1, 2, 3 se urcuje oktava tonu, pokud se nezapise zadne cislo, ton bude v male oktave
+- volitelne pismeno t znamena triolu, tzn. zmensi notu o tretinu trvani
+- hezdicka '*' prida za notu nepatrnou pauzu, aby dve stejne noty za sebou nesplynuly v jednu
+- becka pro snizeni tonu se nepouzivaji, vse je mozno zajistit krizky, napr. "4#a" je nota "be"(hes)
+- je dulezite dodrzet poradi - tecka/y jsou vzdycky pred krizkem, cislo oktavy vzdy pred triolou apod.
+
+Pauzy(pomlky) se zapisuji nasledovne:
+
+delka[.][.]-[t]  - hranate zavorky opet oznacuji pouze nepovinny udaj a do melodie se nepisou
+
+priklady : 2-, 4.-, 8..-, 16-, 32..-
+
+- delka muze opet nabyvat hodnot 1, 2, 4, 8, 16, 32
+- obe tecky funguji stejne, jak bylo popsano u noty
+- jako pauzu program bere znak '-'(pomlcka nebo minus)
+- opet je tu moznost trioly
+
+Pro predstavu priklady ruznych not a pomlk:
+
+4c - ctvrtka, nota male c
+8.d1 - osmina s teckou, nota d v 1.oktave
+2#at* - triola z pulnoty, nota male ais s nepatrnou pauzou na konci
+16#g2 - sestnactinova nota gis v 2.oktave
+1.#e1t - triola z cele noty s teckou, eis v 1.oktave
+32..#f3t* - triola z dvaatricetinove noty s dvema teckami, fis v 3.oktave s pauzou na konci
+
+
+
+
+
+Program je funkcni na Win2000, WinXP 32bit a W7.
