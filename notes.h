@@ -81,17 +81,6 @@ public:
   ~NoteDuration(){}
 };
 
-struct Rest : NoteDuration
-{
-  Rest(unsigned short v,
-       bool d,
-       bool d2,
-       bool t):
-    NoteDuration(v, d, d2, t)
-  {}
-  ~Rest(){}
-};
-
 //e.g. 16..#a2t[Hello ]
 class Note : public NoteDuration, public NotePitch  //multiple inheritance, +500 EXP
 {
@@ -115,6 +104,17 @@ public:
   std::string getWord();
 
   ~Note(){}
+};
+
+struct Rest : Note
+{
+  Rest(unsigned short v,
+       bool d,
+       bool d2,
+       bool t):
+    Note(v, d, d2, t, false, '-', 0, 0)
+  {}
+  ~Rest(){}
 };
 
 //struct a class je v C++ skoro to same(struct ma vse public)
