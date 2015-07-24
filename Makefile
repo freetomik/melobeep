@@ -1,4 +1,17 @@
-targets=main.cpp melobeep.cpp notes.cpp
-all:
-	g++ -std=c++11 -Wall -g -pedantic $(targets) -o melobeep_cpp
-	#g++ -std=c++11 -Wall -Werror -pedantic $(targets) -o melobeep_cpp
+CC=g++
+CFLAGS=-std=c++11 -Wall -pedantic#-g
+all: main
+
+.PHONY: clean
+
+notes.o: notes.cpp notes.h
+	$(CC) $(CFLAGS) -c notes.cpp -o notes.o
+melobeep.o: melobeep.cpp melobeep.h notes.h
+	$(CC) $(CFLAGS) -c melobeep.cpp -o melobeep.o
+main.o: main.cpp notes.h melobeep.h
+	$(CC) $(CFLAGS) -c main.cpp -o main.o
+main: notes.o melobeep.o main.o
+	$(CC) $(CFLAGS) notes.o melobeep.o main.o -o melobeep
+
+clean:
+	rm -f *.o

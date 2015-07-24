@@ -5,17 +5,17 @@
 using namespace std;
 
 
-void NotePitch::setSharp() {
-  sharp = true;
+bool NotePitch::getSharp() {
+  return sharp;
 }
-void NotePitch::setNote(char note) {
-  this->note = note;
+char NotePitch::getNote() {
+  return note;
 }
-void NotePitch::setOctave(char octave) {
-  this->octave = octave;
+short NotePitch::getOctave() {
+  return octave;
 }
 double NotePitch::getPitch() {
-  return this->pitch;
+  return pitch;
 }
 void NotePitch::computePitch()
 {
@@ -27,18 +27,17 @@ void NotePitch::computePitch()
   if(sharp) pitch *= pow(2, 1/12.0);
 }
 
-
-void NoteDuration::setDuration(char duration) {
-  this->duration = duration;
+unsigned short NoteDuration::getValue() {
+  return value;
 }
-void NoteDuration::setDot() {
-  dot = true;
+bool NoteDuration::getDot() {
+  return dot;
 }
-void NoteDuration::setDot2() {
-  dot2 = true;
+bool NoteDuration::getDot2() {
+  return dot2;
 }
-void NoteDuration::setTriplet() {
-  triplet = true;
+bool NoteDuration::getTriplet() {
+  return triplet;
 }
 double NoteDuration::computeDuration()
 {
@@ -46,18 +45,25 @@ double NoteDuration::computeDuration()
 }
 
 
-void Note::setWord(string word) {
-  this->word = word;
-  // strcpy(this->word, word);
-}
 string Note::getWord() {
   return this->word;
 }
 
-unsigned short Tempo::calculateBPM()
-{
-  
-}
+// http://mp3.deepsound.net/eng/samples_calculs.php
 // 2=60   -> (4/2)*60=120
 // 8=270  -> (4/8)*270=135
 // 2.=40  -> (4/(2*(2/3)))*40=120
+unsigned short ValuedTempo::calculateBPM()
+{
+  double value = 4, ratio = 1;
+  if(duration.getDot()) {
+    value = duration.getValue() * 3/2;
+    if(duration.getDot2())
+      value = duration.getValue() * 7/4;
+  }
+  else  //dot a triplet se svymi ucinky vzajemne rusi
+    if(duration.getTriplet())
+      value *= 2/3;
+  ratio = 4 / value;
+  return ratio * tempo;
+}

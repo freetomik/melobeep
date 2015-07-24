@@ -14,7 +14,7 @@ int main(int argc, char **argv)
   // MNoteFreq freqTable;
   // MNoteFreq::const_iterator n;
   // for (n = freqTable.begin(); n != freqTable.end(); ++n) {
-  //   cout << n->first
+  // cout << n->first
   //        << ':'
   //        << n->second
   //        << " Hz"
