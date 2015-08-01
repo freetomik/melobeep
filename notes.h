@@ -27,21 +27,12 @@ protected:
 
   unsigned short pitch;     //in Hz
 
-  // initialization list, +200 EXP
-  NotePitch(bool s,
-            char n,
-            short o):
-    sharp(s),
-    note(n),
-    octave(o)
-  {}
+  NotePitch(bool s, char n, short o);
 
   bool getSharp();
   char getNote();
   short getOctave();
   double getPitch();
-
-  void computePitch();
 
   ~NotePitch(){}
 };
@@ -59,24 +50,12 @@ protected:
   unsigned short tempo;
 
 public:
-  NoteDuration(unsigned short v,
-               bool d,
-               bool d2,
-               bool t):
-    value(v),
-    dot(d),
-    dot2(d2),
-    triplet(t),
-    duration(500),
-    tempo(120)
-  {}
+  NoteDuration(unsigned short v, bool d, bool d2, bool t);
 
   unsigned short getValue();
   bool getDot();
   bool getDot2();
   bool getTriplet();
-
-  double computeDuration();
 
   ~NoteDuration(){}
 };
@@ -106,7 +85,7 @@ public:
   ~Note(){}
 };
 
-struct Rest : Note
+struct Rest : public Note
 {
   Rest(unsigned short v,
        bool d,
@@ -146,18 +125,11 @@ struct Tempo
   ~Tempo(){}
 };
 
-struct ValuedTempo : Tempo
+struct ValuedTempo : public Tempo
 {
   NoteDuration duration;          //1.part of 8.=280
 
-  ValuedTempo(unsigned short v,
-              bool d,
-              bool d2,
-              bool t):
-    duration(v, d, d2, t)
-  {}
-
-  unsigned short calculateBPM();
+  ValuedTempo(unsigned short v, bool d, bool d2, bool t);
 
   ~ValuedTempo(){}
 };
