@@ -37,7 +37,7 @@ NoteDuration::NoteDuration(unsigned short v, bool d, bool d2, bool t)
     dot(d),
     dot2(d2),
     triplet(t),
-    duration(500),
+    duration(500.0),
     tempo(120)
 {
   //compute duration
@@ -68,15 +68,15 @@ string Note::getWord() {
 ValuedTempo::ValuedTempo(unsigned short v, bool d, bool d2, bool t)
   : duration(v, d, d2, t)
 {
-  double value = 4, ratio = 1;
+  double value = 4.0, ratio = 1.0;
   if(duration.getDot()) {
-    value = duration.getValue() * 3/2;
+    value = duration.getValue() * 3/2.0;
     if(duration.getDot2())
-      value = duration.getValue() * 7/4;
+      value = duration.getValue() * 7/4.0;
   }
   else  //dot a triplet se svymi ucinky vzajemne rusi
     if(duration.getTriplet())
-      value *= 2/3;
+      value *= 2/3.0;
   ratio = 4 / value;
   BPM = ratio * tempo;
 }

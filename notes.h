@@ -46,7 +46,7 @@ protected:
   bool dot, dot2;
   bool triplet;
   
-  unsigned int duration;    //in ms
+  double duration;    //in ms
   unsigned short tempo;
 
 public:
@@ -119,7 +119,7 @@ struct Tempo
 {
   unsigned short tempo;           //2.part of 8.=280
   unsigned short position;  //after which note tempo begins
-  unsigned short BPM;
+  double BPM;
 
   Tempo(){}
   ~Tempo(){}
