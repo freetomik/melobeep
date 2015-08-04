@@ -45,7 +45,7 @@ int main(int argc, char **argv)
   m.output = new MidiOutput();
   m.output->write2output();
   m.output = new WavOutput();
-  m.output->write2output();
+  m.output->write2output(); 
 
   return 0;
 }
