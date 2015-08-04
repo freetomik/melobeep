@@ -97,27 +97,28 @@ struct Rest : public Note
 };
 
 //struct a class je v C++ skoro to same(struct ma vse public)
-// e.g. 1c+2+4.+8..+16..t
+// e.g. 1+2+4.t+8..t+16..c
 struct Ligature : public Note
 {
-  std::array<NoteDuration, 10> durations;
+  std::array<NoteDuration, 9> durations;
 };
 
-// e.g. 4<d #f a> (4..+16.<d #f1 a2>t)
+// e.g. 4<d #f a> (4..t+16.t<d #f1 a2>)
 struct Chord : public Note
 {
-  std::array<NotePitch, 7> pitches;  //max 7 notes in 13th chord
+  //max 7 notes in 13th chord, first note of chord is chord itself(inherited from Note)
+  std::array<NotePitch, 6> pitches;
 };
 
-// e.g. <8a 4#c 2e> (<8.a 4#c1t 2e2+8>)
+// e.g. <8a 4#c 2e> (<8.a 4t#c1 2.+8e>)
 struct DifferentDurationsChord : public Note
 {
-  std::array<Note, 7> notes;
+  std::array<Note, 6> notes;
 };
 
 struct Tempo
 {
-  unsigned short tempo;           //2.part of 8.=280
+  unsigned short tempo;
   unsigned short position;  //after which note tempo begins
   double BPM;
 

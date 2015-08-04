@@ -1,0 +1,48 @@
+NAVRHY:
+Zmena tempa
+- cislo od 30 do 240 oddeleno z obou stran jednim koncem radku
+- schvalen novy format 8.=250(16..t=380); bude to podporovat i stary format(jenom cislo od 30 do 240)
+Komentare
+- v zavorkach:
+(cdur stupnice: ) 4c 4d 4e (tady je pulton) 4f 4g 4a 4h (a tady taky) 4c1
+- nebo dat komentar jako v Lilypondu...? (od % do konce radku)
+Akordy
+-dva typy:
+    4<d #f a> (4..+16.<d #f1 a2>t)
+    <8a 4#c 2e> (<8.a 4#c1t 2e2+8>)
+Pouvazovat nad relativnim zapisem jako v Lilypondu...
+- urychlilo by to zapis, ale to urychli GUIcko
+- nebyl by uz to jednoduchy a sikovny Melobeep z Nokia skladatele, ale takovy mini Lilypond, vyvoj by se uz vydal jinym smerem... a to nechceme... :) takze NE relativnimu zapisu
+- pockat... a co kdyby byl relativni zapis volitelny?
+- zapise se jen nota([#]a-h) a z predchozi noty se vezme delka trvani(pocitaje ligaturu) a oktava(nejbliz od predch.noty - je nutne nechat i moznost manualne zvolit oktavu)
+Rozsireni rozsahu o velkou oktavu - schvaleno
+- kvuli rozsahu kytary(E A d g h e1), zapis velkym pismenem, napr.: 4C (8.#F+16..t)
+Rozsireni do uplnosti - jen navrh
+- delka noty az do 1/256, trojteckovanost, pentoly, heptoly
+- vyska noty od subsubkontra oktavy do sesticarkovane
+Velka zmena syntaxe!
+- sjednoceni delkove casti noty k sobe - dopredu
+- triola a ligatura se budou psat pred notou
+4tc misto 4ct, 4.ta1, 4+8.+16d2
+4..t+8.+16..t#c1
+
+pozadavky na prevod Melobeepu do LilyPondu:
+jednoduchy prevod, v absolutni notaci
+relativni notace, moznost volby referencni noty
+podpora textu(slov)
+moznost vygenerovani kytarove tabulatury
+podpora ligatur
+
+prevadet Melobeep i do MIDI (i wavu)
+
+pozadavky na datove typy:
+Ligature musi byt typove kompatibilni s Note
+Ligature ma mit (jako atribut) jeden objekt NotePitch a pole objektu NoteDuration
+mozne reseni:
+Ligature bude dedit od Note a vsechny atributy od NoteDuration se ukryji(private) - ne moc ciste reseni...
+
+vytvorit output.cpp a .h
+- bude tam abstraktni trida output, s virtualni metodou output
+- dedit od ni budou MidiOutput, WavOutput, AudioOutput... a ty si budou implementovat metodu output kazda po svem
+
+zpracovani argumentu - boost.program_options
