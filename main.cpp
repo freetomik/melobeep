@@ -6,6 +6,7 @@
 
 #include "melobeep.h"
 #include "notes.h"
+#include "output.h"
 
 using namespace std;
 
@@ -36,5 +37,15 @@ int main(int argc, char **argv)
   // } 
 
   // sourceFile.close();
+
+  Melobeep m("claw.txt");
+
+  m.output = new AudioOutput();
+  m.output->write2output();
+  m.output = new MidiOutput();
+  m.output->write2output();
+  m.output = new WavOutput();
+  m.output->write2output();
+
   return 0;
 }

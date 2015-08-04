@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "notes.h"
+#include "output.h"
 
 class Song
 {
@@ -12,17 +13,19 @@ private:
   std::vector<Note> melody;
   std::vector<Tempo> tempos;
 public:
-  Song();
+  Song(){}
   ~Song(){}
 };
 
 class Melobeep
 {
-private:
+// private:
+public:
   std::string fileName;
   Song song; 
+  Output *output;
 public:
-  Melobeep(std::string fileName);
+  Melobeep(std::string fileName){}
 
   int read(std::string inputFileName);
   int write2wav(std::string outputFileName);

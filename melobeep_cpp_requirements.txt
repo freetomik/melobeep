@@ -44,5 +44,6 @@ Ligature bude dedit od Note a vsechny atributy od NoteDuration se ukryji(private
 vytvorit output.cpp a .h
 - bude tam abstraktni trida output, s virtualni metodou output
 - dedit od ni budou MidiOutput, WavOutput, AudioOutput... a ty si budou implementovat metodu output kazda po svem
+- anebo v output.cpp vytvorit pouze sadu funkci pro ruzne vystupy a netvorit specialni tridy
 
 zpracovani argumentu - boost.program_options
