@@ -27,6 +27,7 @@ protected:
 
   unsigned short pitch;     //in Hz
 
+public:
   NotePitch(bool s, char n, short o);
 
   bool getSharp();
@@ -118,17 +119,18 @@ struct DifferentDurationsChord : public Note
 
 struct Tempo
 {
-  unsigned short tempo;
+  double BPM;               //beats per minute
   unsigned short position;  //after which note tempo begins
-  double BPM;
 
   Tempo(){}
   ~Tempo(){}
 };
 
+//8..t=280
 struct ValuedTempo : public Tempo
 {
-  NoteDuration duration;          //1.part of 8.=280
+  unsigned short tempo;           //280
+  NoteDuration duration;          //8..t
 
   ValuedTempo(unsigned short v, bool d, bool d2, bool t);
 

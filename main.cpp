@@ -40,12 +40,20 @@ int main(int argc, char **argv)
 
   Melobeep m("claw.txt");
 
-  m.output = new AudioOutput();
+  m.output = new AudioOutput(2);
   m.output->write2output();
-  m.output = new MidiOutput();
+  delete m.output;
+  m.output = new MidiOutput(4);
   m.output->write2output();
-  m.output = new WavOutput();
+  delete m.output;
+  m.output = new WavOutput(6);
   m.output->write2output(); 
+  delete m.output;
+
+  m.song = new Song();
+  Note n(false, 'c', 1, 4, true, false, false, "ahoj");
+  m.song->melody.push_back(n);
+  cout << m.song->melody[0].getNote() << endl;
 
   return 0;
 }

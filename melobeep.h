@@ -9,7 +9,8 @@
 
 class Song
 {
-private:
+// private:
+public:
   std::vector<Note> melody;
   std::vector<Tempo> tempos;
 public:
@@ -22,7 +23,7 @@ class Melobeep
 // private:
 public:
   std::string fileName;
-  Song song; 
+  Song *song; 
   Output *output;
 public:
   Melobeep(std::string fileName){}
