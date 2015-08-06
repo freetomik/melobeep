@@ -2,6 +2,7 @@
 #define NOTES_H
 
 #include <string>
+#include <vector>
 #include <array>
 #include <map>
 
@@ -28,6 +29,7 @@ protected:
   unsigned short pitch;     //in Hz
 
 public:
+  NotePitch();  //kvuli inicializaci pole pitches v Chord
   NotePitch(bool s, char n, short o);
 
   bool getSharp();
@@ -51,6 +53,7 @@ protected:
   unsigned short tempo;
 
 public:
+  NoteDuration();   //kvuli inicializaci pole durations v Ligature
   NoteDuration(unsigned short v, bool d, bool d2, bool t);
 
   unsigned short getValue();
@@ -68,13 +71,17 @@ protected:
   std::string word;
 
 public:
-  Note(bool s,
-       char n,
-       short o,
-       unsigned short v,
+  Note():   //kvuli inicializaci pole notes v DifferentDurationsChord
+    NoteDuration(),
+    NotePitch()
+  {}
+  Note(unsigned short v,
        bool d,
        bool d2,
        bool t,
+       bool s,
+       char n,
+       short o,
        std::string w):
     NoteDuration(v, d, d2, t),
     NotePitch(s, n, o),
@@ -92,7 +99,7 @@ struct Rest : public Note
        bool d,
        bool d2,
        bool t):
-    Note(v, d, d2, t, false, '-', 0, 0)
+    Note(v, d, d2, t, false, '-', -2, "")
   {}
   ~Rest(){}
 };
@@ -102,6 +109,16 @@ struct Rest : public Note
 struct Ligature : public Note
 {
   std::array<NoteDuration, 9> durations;
+  Ligature(unsigned short v,
+       bool d,
+       bool d2,
+       bool t,
+       bool s,
+       char n,
+       short o,
+       std::string w):
+    Note(v, d, d2, t, s, n, o, w)
+    {}
 };
 
 // e.g. 4<d #f a> (4..t+16.t<d #f1 a2>)
@@ -109,12 +126,32 @@ struct Chord : public Note
 {
   //max 7 notes in 13th chord, first note of chord is chord itself(inherited from Note)
   std::array<NotePitch, 6> pitches;
+  Chord(unsigned short v,
+       bool d,
+       bool d2,
+       bool t,
+       bool s,
+       char n,
+       short o,
+       std::string w):
+    Note(v, d, d2, t, s, n, o, w)
+    {}
 };
 
 // e.g. <8a 4#c 2e> (<8.a 4t#c1 2.+8e>)
 struct DifferentDurationsChord : public Note
 {
   std::array<Note, 6> notes;
+  DifferentDurationsChord(unsigned short v,
+       bool d,
+       bool d2,
+       bool t,
+       bool s,
+       char n,
+       short o,
+       std::string w):
+    Note(v, d, d2, t, s, n, o, w)
+    {}
 };
 
 struct Tempo
@@ -132,9 +169,21 @@ struct ValuedTempo : public Tempo
   unsigned short tempo;           //280
   NoteDuration duration;          //8..t
 
+  ValuedTempo(){}
   ValuedTempo(unsigned short v, bool d, bool d2, bool t);
 
   ~ValuedTempo(){}
+};
+
+class Song
+{
+// private:
+public:
+  std::vector<Note> melody;
+  std::vector<Tempo> tempos;
+public:
+  Song(){}
+  ~Song(){}
 };
 
 #endif

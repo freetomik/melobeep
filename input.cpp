@@ -1,32 +1,7 @@
-#include <fstream>
-#include <string>
-#include <map>
+#include "input.h"
 
 using namespace std;
 
-enum State { START, WHITESEP, _16, _32, DURATION, DOT, DOT2, SHARP, NOTE,
-             OCTAVE, TRIPLET, REST };
-
-typedef enum TokenType {
-  NOTHING, NUMBER, STRING, TSHARP, TDOT, DASH, PLUS, EQUALS,
-  RIGHT_ANGLE_BRACKET, LEFT_ANGLE_BRACKET, RIGHT_SQUARE_BRACKET, LEFT_SQUARE_BRACKET, RIGHT_PARENTHESIS, LEFT_PARENTHESIS,
-  WHITESPACE, NEWLINE, END_OF_FILE
-}ETokenType;
-
-map<char, TokenType> CharTokenType
-{
-  {'#', TSHARP},
-  {'.', TDOT},
-  {'-', DASH},
-  {'+', PLUS},
-  {'=', EQUALS},
-  {'(', LEFT_PARENTHESIS},
-  {')', RIGHT_PARENTHESIS},
-  {'[', LEFT_ANGLE_BRACKET},
-  {']', RIGHT_ANGLE_BRACKET},
-  {'<', LEFT_ANGLE_BRACKET},
-  {'>', RIGHT_ANGLE_BRACKET}
-};
 
 string printTokenType(ETokenType t) {
   string tokenTypeString = "";
@@ -139,7 +114,7 @@ ETokenType getNextToken(ifstream &sourceFile, string &data) {
         TokenType = NEWLINE;
         break;
       default:
-        TokenType = CharTokenType[c];
+        TokenType = CharTokenType.at(c);
     }
     return TokenType;
   }

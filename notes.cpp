@@ -4,6 +4,13 @@
 
 using namespace std;
 
+NotePitch::NotePitch()
+  : sharp(false),
+    note('-'),
+    octave(-2),
+    pitch(0)
+  {}
+
 NotePitch::NotePitch(bool s, char n, short o)
 //initialization list:
   : sharp(s),
@@ -11,12 +18,14 @@ NotePitch::NotePitch(bool s, char n, short o)
     octave(o)
 //constructor body:
 {
-  pitch = freqTable.at(note);
-  if(octave == -1) pitch /= 2;
-  else if(octave == 1) pitch *= 2;
-  else if(octave == 2) pitch *= 4;
-  else if(octave == 3) pitch *= 8;
-  if(sharp) pitch *= pow(2, 1/12.0);
+  if(note >= 'a' && note <= 'h' && note != 'b') {
+    pitch = freqTable.at(note);
+    if(octave == -1) pitch /= 2;
+    else if(octave == 1) pitch *= 2;
+    else if(octave == 2) pitch *= 4;
+    else if(octave == 3) pitch *= 8;
+    if(sharp) pitch *= pow(2, 1/12.0);
+  }
 }
 
 bool NotePitch::getSharp() {
@@ -31,6 +40,15 @@ short NotePitch::getOctave() {
 double NotePitch::getPitch() {
   return pitch;
 }
+
+NoteDuration::NoteDuration()
+  : value(1),
+    dot(false),
+    dot2(false),
+    triplet(false),
+    duration(0.0),
+    tempo(120)
+  {}
 
 NoteDuration::NoteDuration(unsigned short v, bool d, bool d2, bool t)
   : value(v),

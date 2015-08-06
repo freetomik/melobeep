@@ -47,3 +47,8 @@ vytvorit output.cpp a .h
 - anebo v output.cpp vytvorit pouze sadu funkci pro ruzne vystupy a netvorit specialni tridy
 
 zpracovani argumentu - boost.program_options
+
+omezeni vstupu
+- pro NoteDuration::value, aby sly zadat jen cisla 1,2,4,8,16,32
+- pokud je NoteDuration::dot false, pak musi byt i NoteDuration::dot2 false
+- vyhozenim vyjimky v konstruktoru
