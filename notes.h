@@ -5,6 +5,7 @@
 #include <vector>
 #include <array>
 #include <map>
+#include <memory>
 
 typedef std::map<char, double> MNoteFreq;
 //C++11 initialization of a map, +100 EXP
@@ -88,6 +89,10 @@ public:
     word(w)
   {}
 
+  std::array<NoteDuration, 9> ligature;
+  std::array<NotePitch, 6> chord;
+  std::array<std::unique_ptr<Note>, 6> ddchord;  //different durations chord
+
   std::string getWord();
 
   ~Note(){}
@@ -102,56 +107,6 @@ struct Rest : public Note
     Note(v, d, d2, t, false, '-', -2, "")
   {}
   ~Rest(){}
-};
-
-//struct a class je v C++ skoro to same(struct ma vse public)
-// e.g. 1+2+4.t+8..t+16..c
-struct Ligature : public Note
-{
-  std::array<NoteDuration, 9> durations;
-  Ligature(unsigned short v,
-       bool d,
-       bool d2,
-       bool t,
-       bool s,
-       char n,
-       short o,
-       std::string w):
-    Note(v, d, d2, t, s, n, o, w)
-    {}
-};
-
-// e.g. 4<d #f a> (4..t+16.t<d #f1 a2>)
-struct Chord : public Note
-{
-  //max 7 notes in 13th chord, first note of chord is chord itself(inherited from Note)
-  std::array<NotePitch, 6> pitches;
-  Chord(unsigned short v,
-       bool d,
-       bool d2,
-       bool t,
-       bool s,
-       char n,
-       short o,
-       std::string w):
-    Note(v, d, d2, t, s, n, o, w)
-    {}
-};
-
-// e.g. <8a 4#c 2e> (<8.a 4t#c1 2.+8e>)
-struct DifferentDurationsChord : public Note
-{
-  std::array<Note, 6> notes;
-  DifferentDurationsChord(unsigned short v,
-       bool d,
-       bool d2,
-       bool t,
-       bool s,
-       char n,
-       short o,
-       std::string w):
-    Note(v, d, d2, t, s, n, o, w)
-    {}
 };
 
 struct Tempo

@@ -7,7 +7,7 @@
 #include <fstream>
 
 #include "notes.h"
-#include "output.h"
+// #include "output.h"
 
 enum State { START, WHITESEP, _16, _32, DURATION, DOT, DOT2, SHARP, NOTE,
              OCTAVE, TRIPLET, REST };

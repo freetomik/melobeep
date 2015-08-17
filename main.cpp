@@ -6,7 +6,7 @@
 
 #include "input.h"
 #include "notes.h"
-#include "output.h"
+// #include "output.h"
 
 using namespace std;
 
@@ -49,25 +49,20 @@ int main(int argc, char **argv)
   // delete m.output;
 
   Song song;
+  // 4.c1[ahoj]
   Note n(4, true, false, false, false, 'c', 1, "ahoj");
   song.melody.push_back(n);
   cout << song.melody[0].getNote() << endl;
 
+  // 8.-
   Rest r(8, true, false, false);  
   song.melody.push_back(r);
   cout << song.melody[1].getNote() << endl;
 
-  Ligature l(16, true, false, false, false, 'c', 1, "ahoj");
-  song.melody.push_back(l);
-  cout << song.melody[2].getValue() << endl;
   // NoteDuration nd1(16, 0, 0, 0);
   // NoteDuration nd2(32, 1, 0, 1);
   // NoteDuration nd3(8, 1, 1, 0);
   // NoteDuration nd4(1, 1, 1, 1);
-  // song.melody[2].durations.push_back(nd1);
-  // song.melody[2].durations.push_back(nd2);
-  // song.melody[2].durations.push_back(nd3);
-  // song.melody[2].durations.push_back(nd4);
 
   //nechce to najit durations, asi proto, ze pole melody je typu Note, a ten v sobe durations nema
   // mozne reseni: vytvorit jeste jeden nadrazeny typ, napr. MelodyObject
