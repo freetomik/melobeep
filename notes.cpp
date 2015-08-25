@@ -4,6 +4,7 @@
 
 using namespace std;
 
+//for initialization of chord
 NotePitch::NotePitch()
   : sharp(false),
     note('-'),
@@ -41,6 +42,7 @@ double NotePitch::getPitch() {
   return pitch;
 }
 
+//for initialization of ligature
 NoteDuration::NoteDuration()
   : value(1),
     dot(false),

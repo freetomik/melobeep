@@ -6,7 +6,7 @@
 
 #include "input.h"
 #include "notes.h"
-// #include "output.h"
+#include "output.h"
 
 using namespace std;
 

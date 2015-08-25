@@ -5,7 +5,6 @@
 #include <vector>
 #include <array>
 #include <map>
-#include <memory>
 
 typedef std::map<char, double> MNoteFreq;
 //C++11 initialization of a map, +100 EXP
@@ -89,9 +88,9 @@ public:
     word(w)
   {}
 
-  std::array<NoteDuration, 9> ligature;
-  std::array<NotePitch, 6> chord;
-  std::array<std::unique_ptr<Note>, 6> ddchord;  //different durations chord
+  std::array<NoteDuration*, 9> ligature;
+  std::array<NotePitch*, 6> chord;
+  std::array<Note*, 6> ddchord;  //different durations chord
 
   std::string getWord();
 
