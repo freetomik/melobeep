@@ -124,6 +124,12 @@ ETokenType getNextToken(ifstream &sourceFile, string &data) {
   return TokenType;
 }
 
-int parse() {
+int parse(ifstream &sourceFile) {
+  ETokenType token;
+  string data;
+  while(token != END_OF_FILE) {
+    token = getNextToken(sourceFile, data);
+    cout << printTokenType(token) << ", " << data << endl;
+  } 
   return 42;
 }

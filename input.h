@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <iostream>
 #include <fstream>
 
 #include "notes.h"
@@ -35,6 +36,6 @@ const std::map<char, TokenType> CharTokenType
 
 std::string printTokenType(ETokenType t);
 ETokenType getNextToken(std::ifstream &sourceFile, std::string &data);
-int parse();
+int parse(std::ifstream &sourceFile);
 
 #endif

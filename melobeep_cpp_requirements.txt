@@ -16,7 +16,7 @@ Pouvazovat nad relativnim zapisem jako v Lilypondu...
 - pockat... a co kdyby byl relativni zapis volitelny?
 - zapise se jen nota([#]a-h) a z predchozi noty se vezme delka trvani(pocitaje ligaturu) a oktava(nejbliz od predch.noty - je nutne nechat i moznost manualne zvolit oktavu)
 Rozsireni rozsahu o velkou oktavu - schvaleno
-- kvuli rozsahu kytary(E A d g h e1), zapis velkym pismenem, napr.: 4C (8.#F+16..t)
+- kvuli rozsahu kytary(E A d g h e1), zapis velkym pismenem, napr.: 4C (8.t#F+16..)
 Rozsireni do uplnosti - jen navrh
 - delka noty az do 1/256, trojteckovanost, pentoly, heptoly
 - vyska noty od subsubkontra oktavy do sesticarkovane
