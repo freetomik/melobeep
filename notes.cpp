@@ -84,16 +84,19 @@ string Note::getWord() {
 // http://mp3.deepsound.net/eng/samples_calculs.php
 // 2=60   -> (4/2)*60=120
 // 8=270  -> (4/8)*270=135
-// 2.=40  -> (4/(2*(2/3)))*40=120
+// 2.=40  -> (4/(2*(3/2)))*40=120
 ValuedTempo::ValuedTempo(unsigned short v, bool d, bool d2, bool t)
   : duration(v, d, d2, t)
 {
   double value, ratio = 1.0;
   value = duration.getValue();
   if(duration.getDot()) {
-    value = duration.getValue() * 3/2.0;
-    if(duration.getDot2())
-      value = duration.getValue() * 7/4.0;
+    value *= 3/2.0;     //(3/2) = 1+1/2 = x.
+    if(duration.getDot2()) {
+      value *= 7/6.0;   //(3/2)*(7/6) = 7/4 = 1+3/4 = x..
+      if(duration.getTriplet())
+        value *= 2/3.0;
+    }
   }
   else  //dot a triplet se svymi ucinky vzajemne rusi
     if(duration.getTriplet())
