@@ -27,10 +27,10 @@ int main(int argc, char **argv)
   //      << t.value.duration << endl
   //      << t.value.tempo << endl;
 
-  ifstream sourceFile(argv[1]);
+  // ifstream sourceFile(argv[1]);
 
-  parse(sourceFile);
-  sourceFile.close();
+  // parse(sourceFile);
+  // sourceFile.close();
 
   // m.output = new AudioOutput(2);
   // m.output->write2output();
@@ -42,18 +42,18 @@ int main(int argc, char **argv)
   // m.output->write2output(); 
   // delete m.output;
 
-  // Song song;
+  Song song;
   // 4.c1[ahoj]
-  // Note n(4, true, false, false, false, 'c', 1, "ahoj");
-  // Note *np = &n;
-  // song.melody.push_back(n);
-  // // cout << song.melody[0].getNote() << endl;
-  // cout << "sizeof(song):" << sizeof(song) << endl;
-  // cout << "sizeof(n):" << sizeof(n) << endl;
-  // cout << "sizeof(np):" << sizeof(np) << endl;
-  // cout << "sizeof(n.ligature):" << sizeof(n.ligature) << endl;
-  // cout << "sizeof(n.chord):" << sizeof(n.chord) << endl;
-  // cout << "sizeof(n.ddchord):" << sizeof(n.ddchord) << endl;
+  Note n(4, true, false, false, false, 'c', 1, "ahoj");
+  Note *np = &n;
+  song.melody.push_back(n);
+  cout << song.melody[0].getNote() << endl;
+  cout << "sizeof(song):" << sizeof(song) << endl;
+  cout << "sizeof(n):" << sizeof(n) << endl;
+  cout << "sizeof(np):" << sizeof(np) << endl;
+  cout << "sizeof(n.ligature):" << sizeof(n.ligature) << endl;
+  cout << "sizeof(n.chord):" << sizeof(n.chord) << endl;
+  cout << "sizeof(n.ddchord):" << sizeof(n.ddchord) << endl;
 
   // // 8.-
   // Rest r(8, true, false, false);  

@@ -88,9 +88,9 @@ public:
     word(w)
   {}
 
-  std::array<NoteDuration*, 9> ligature;
-  std::array<NotePitch*, 6> chord;
-  std::array<Note*, 6> ddchord;  //different durations chord
+  std::array<NoteDuration, 9> *ligature;
+  std::array<NotePitch, 6> *chord;
+  std::array<Note, 6> *ddchord;  //different durations chord
 
   std::string getWord();
 

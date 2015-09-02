@@ -8,13 +8,14 @@ Komentare
 - nebo dat komentar jako v Lilypondu...? (od % do konce radku)
 Akordy
 -dva typy:
-    4<d #f a> (4..+16.<d #f1 a2>t)
-    <8a 4#c 2e> (<8.a 4#c1t 2e2+8>)
+    4<d #f a> (16.+4..t<d #f1 a2>)
+    <8a 4#c 2e> (<8.a 4t#c1 8+2e2>)
 Pouvazovat nad relativnim zapisem jako v Lilypondu...
 - urychlilo by to zapis, ale to urychli GUIcko
 - nebyl by uz to jednoduchy a sikovny Melobeep z Nokia skladatele, ale takovy mini Lilypond, vyvoj by se uz vydal jinym smerem... a to nechceme... :) takze NE relativnimu zapisu
 - pockat... a co kdyby byl relativni zapis volitelny?
 - zapise se jen nota([#]a-h) a z predchozi noty se vezme delka trvani(pocitaje ligaturu) a oktava(nejbliz od predch.noty - je nutne nechat i moznost manualne zvolit oktavu)
+- NE. Problem je, ze mam notu bez oktavy jako notu v male oktave.
 Rozsireni rozsahu o velkou oktavu - schvaleno
 - kvuli rozsahu kytary(E A d g h e1), zapis velkym pismenem, napr.: 4C (8.t#F+16..)
 Rozsireni do uplnosti - jen navrh

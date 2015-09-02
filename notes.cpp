@@ -88,7 +88,8 @@ string Note::getWord() {
 ValuedTempo::ValuedTempo(unsigned short v, bool d, bool d2, bool t)
   : duration(v, d, d2, t)
 {
-  double value = 4.0, ratio = 1.0;
+  double value, ratio = 1.0;
+  value = duration.getValue();
   if(duration.getDot()) {
     value = duration.getValue() * 3/2.0;
     if(duration.getDot2())
