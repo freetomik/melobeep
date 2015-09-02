@@ -26,6 +26,12 @@ Velka zmena syntaxe!
 - triola a ligatura se budou psat pred notou
 4tc misto 4ct, 4.ta1, 4+8.+16d2
 4..t+8.+16..t#c1
+Zpetna kompatibilita s Nokia skladatelem 
+- nota 'b' stejna jako nota 'h' - anglosaske a ceske(a jine) znaceni
+Nezavest i becka?
+- kvuli Lilypondu...
+- mozna syntaxe: 4bg (16..tba3)
+- (nadejny navrh)
 
 pozadavky na prevod Melobeepu do LilyPondu:
 jednoduchy prevod, v absolutni notaci
@@ -52,4 +58,4 @@ zpracovani argumentu - boost.program_options
 omezeni vstupu
 - pro NoteDuration::value, aby sly zadat jen cisla 1,2,4,8,16,32
 - pokud je NoteDuration::dot false, pak musi byt i NoteDuration::dot2 false
-- vyhozenim vyjimky v konstruktoru
+- vyse uvedene resit vyhozenim vyjimky v konstruktoru

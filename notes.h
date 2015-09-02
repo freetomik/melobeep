@@ -15,29 +15,8 @@ const MNoteFreq freqTable {
   {'f', 174.6141157165},
   {'g', 195.9977179909},
   {'a', 220.0000000000},
+  {'b', 246.9416506281},
   {'h', 246.9416506281}
-};
-
-// for notes in chord type no.1: 4<a1 #c1 e1>
-class NotePitch
-{
-protected:
-  bool sharp;
-  char note;
-  short octave;             //from -1(great octave) to 3
-
-  unsigned short pitch;     //in Hz
-
-public:
-  NotePitch();  //kvuli inicializaci pole pitches v Chord
-  NotePitch(bool s, char n, short o);
-
-  bool getSharp();
-  char getNote();
-  short getOctave();
-  double getPitch();
-
-  ~NotePitch(){}
 };
 
 // for parts of ligature(tie)
@@ -62,6 +41,30 @@ public:
   bool getTriplet();
 
   ~NoteDuration(){}
+};
+
+// for notes in chord type no.1: 4<a1 #c1 e1>
+class NotePitch
+{
+protected:
+  bool sharp;
+  char note;
+  short octave;             //from -1(great octave) to 3
+
+  unsigned short pitch;     //in Hz
+
+  bool isNote(char c);
+
+public:
+  NotePitch();  //kvuli inicializaci pole pitches v Chord
+  NotePitch(bool s, char n, short o);
+
+  bool getSharp();
+  char getNote();
+  short getOctave();
+  double getPitch();
+
+  ~NotePitch(){}
 };
 
 //e.g. 16..#a2t[Hello ]

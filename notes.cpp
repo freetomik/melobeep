@@ -4,44 +4,6 @@
 
 using namespace std;
 
-//for initialization of chord
-NotePitch::NotePitch()
-  : sharp(false),
-    note('-'),
-    octave(-2),
-    pitch(0)
-  {}
-
-NotePitch::NotePitch(bool s, char n, short o)
-//initialization list:
-  : sharp(s),
-    note(n),
-    octave(o)
-//constructor body:
-{
-  if(note >= 'a' && note <= 'h' && note != 'b') {
-    pitch = freqTable.at(note);
-    if(octave == -1) pitch /= 2;
-    else if(octave == 1) pitch *= 2;
-    else if(octave == 2) pitch *= 4;
-    else if(octave == 3) pitch *= 8;
-    if(sharp) pitch *= pow(2, 1/12.0);
-  }
-}
-
-bool NotePitch::getSharp() {
-  return sharp;
-}
-char NotePitch::getNote() {
-  return note;
-}
-short NotePitch::getOctave() {
-  return octave;
-}
-double NotePitch::getPitch() {
-  return pitch;
-}
-
 //for initialization of ligature
 NoteDuration::NoteDuration()
   : value(1),
@@ -76,6 +38,47 @@ bool NoteDuration::getTriplet() {
   return triplet;
 }
 
+
+//for initialization of chord
+NotePitch::NotePitch()
+  : sharp(false),
+    note('-'),
+    octave(-2),
+    pitch(0)
+  {}
+
+NotePitch::NotePitch(bool s, char n, short o)
+//initialization list:
+  : sharp(s),
+    note(n),
+    octave(o)
+//constructor body:
+{
+  if(isNote(note)) {
+    pitch = freqTable.at(note);
+    if(octave == -1) pitch /= 2;
+    else if(octave == 1) pitch *= 2;
+    else if(octave == 2) pitch *= 4;
+    else if(octave == 3) pitch *= 8;
+    if(sharp) pitch *= pow(2, 1/12.0);
+  }
+}
+
+bool NotePitch::getSharp() {
+  return sharp;
+}
+char NotePitch::getNote() {
+  return note;
+}
+short NotePitch::getOctave() {
+  return octave;
+}
+double NotePitch::getPitch() {
+  return pitch;
+}
+bool NotePitch::isNote(char c) {
+  return ( (c >= 'a' and c <= 'h') or (c >= 'A' and c <= 'H') );
+}
 
 string Note::getWord() {
   return this->word;
