@@ -32,6 +32,9 @@ rozděleno (podle opory z IFJ, str.22, př.2.4.7):
 <slovo>    = \[[^\[\]]*\];
 
 <melobeep_note> = <delka>(<tecka>{0,2}(<krizek>?<ton><oktava>?<triola>?<ligatura>* + <pauza><triola>?))<slovo>?
+4c 8..t+16+32#g3
+
+Legato: 4c+1d 4h+4c
 
 pozn. V části "formálně" a "rozděleno" je znak '+' je ve významu disjunkce, nikoli kvantifikátoru.
 

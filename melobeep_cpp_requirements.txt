@@ -8,6 +8,14 @@ Komentare
 - nebo dat komentar jako v Lilypondu...? (od % do konce radku)
 Akordy
 -dva typy:
+	<8a 4c> <8a 4c> <8a 4c> 
+	-------------------------------------
+	4.< c, e, g > < , , + >  4.<c, , a >
+	^^        ^   ^^^^^^^^^
+	Delka     |   Vazba mezi skupinami
+	skupiny   \
+	           - Clenove skupiny
+	-------------------------------------
     4<d #f a> (16.+4..t<d #f1 a2>)
     <8a 4#c 2e> (<8.a 4t#c1 8+2e2>)
 Pouvazovat nad relativnim zapisem jako v Lilypondu...
@@ -59,3 +67,31 @@ omezeni vstupu
 - pro NoteDuration::value, aby sly zadat jen cisla 1,2,4,8,16,32
 - pokud je NoteDuration::dot false, pak musi byt i NoteDuration::dot2 false
 - vyse uvedene resit vyhozenim vyjimky v konstruktoru
+
+
+Honzovy rady:
+nacitat vstup bufferovane, napr. po 4kB
+Song
+	<consists-of> Track
+
+Track
+	<consists-of> List<MelodyObject>, List<Connective>
+
+MelodyObject
+	//hudebni element, high level entita.
+	<consists-of> Duration
+
+Note
+	<is-a> MelodyObject
+	<consists-of> Pitch
+
+Rest
+	<is-a> MelodyObject
+	<consists-of>
+
+Chord
+	<is-a> MelodyObject
+	<consists-of> Pitch list
+
+Legato
+	<is-a> Connective
